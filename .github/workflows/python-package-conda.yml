@@ -25,7 +25,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        conda env create --file environment.yml --name myenv
+        conda env create --file .github/workflows/environment.yml --name myenv
         conda activate myenv
 
     - name: Install additional dependencies
