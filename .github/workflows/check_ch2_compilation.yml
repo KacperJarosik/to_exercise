@@ -1,0 +1,33 @@
+name: Check ch2.py Compilation
+
+on:
+  push:
+    branches:
+      - main
+      - '**'
+
+jobs:
+  compile-ch2:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Wybierz odpowiednią wersję Pythona
+
+    - name: Set up virtual environment and install dependencies
+      run: |
+        python -m venv venv-MachineLearningBook
+        source venv-MachineLearningBook/bin/activate
+        pip install --upgrade pip
+        # Zainstaluj potrzebne pakiety tutaj, np.:
+        # pip install numpy pandas scikit-learn
+
+    - name: Check ch2.py compilation
+      run: |
+        source venv-MachineLearningBook/bin/activate
+        python -m py_compile ch2.py
