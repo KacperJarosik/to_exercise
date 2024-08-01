@@ -20,23 +20,27 @@ jobs:
 
     - name: Create Conda environment
       run: |
+        # Find Conda installation path
+        echo "Conda installation path: $CONDA"
+        ls $CONDA/etc/profile.d/  # Check available files
         conda env create --file .github/workflows/environment.yml --name myenv
 
     - name: Install additional dependencies
       run: |
-        source ~/miniconda3/etc/profile.d/conda.sh
+        # Adjust the path if needed based on the output from previous step
+        source $CONDA/etc/profile.d/conda.sh
         conda activate myenv
         conda install numpy pandas matplotlib scipy scikit-learn flake8 pytest
 
     - name: Lint with flake8
       run: |
-        source ~/miniconda3/etc/profile.d/conda.sh
+        source $CONDA/etc/profile.d/conda.sh
         conda activate myenv
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Test with pytest
       run: |
-        source ~/miniconda3/etc/profile.d/conda.sh
+        source $CONDA/etc/profile.d/conda.sh
         conda activate myenv
         pytest
